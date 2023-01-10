@@ -1,19 +1,25 @@
 export type TPerson = {
     id: string;
-    email: string;    
+    email: string;
     password: string;
+}
+
+export enum Category {
+    SHIRT = "Camisa",
+    TSHIRT = "Camiseta",
+    REGATTA = "Regata"
 }
 
 export type TProduct = {
     id: string;
-    name: string;    
+    name: string;
     price: number;
-    category: string;
+    category: Category;
 }
 
 export type TPurchase = {
     userId: string;
-    productId: string;    
+    productId: string;
     quantity: number;
     totalPrice: number;
 }
