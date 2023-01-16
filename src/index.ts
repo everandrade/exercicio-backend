@@ -96,10 +96,15 @@ app.put("/user/:id", (req: Request, res: Response) => {
             throw new Error("Usuario não encontrado!")
         }
 
-        if (newEmail === req.body.email) {
+        const findNewEmail = users.find((email) => email.id === id)
+        if (!findNewEmail) {
             res.status(400)
             throw new Error("Email igual ao anterior!")
         }
+        // if (newEmail === req.body.email) {
+        //     res.status(400)
+        //     throw new Error("Email igual ao anterior!")
+        // }
 
         const regexEmail =
             /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
@@ -155,6 +160,32 @@ app.get("/products", (req: Request, res: Response) => {
         if (res.statusCode === 200) {
             res.status(500)
         }
+        res.send(error.message)
+    }
+})
+
+//procurar produto
+app.get("/products/search", (req: Request, res: Response) => {
+    let productFilter
+    try {
+        const q = req.query.q as string
+
+        if (q.length <= 1) {
+            res.status(400)
+            throw new Error("Query params deve possuir pelo menos um caractere!")
+        }
+
+        productFilter = products.filter((product) => {
+            return product.name.toLowerCase().includes(q.toLowerCase())
+        });
+        res.status(200).send(productFilter)
+    } catch (error: any) {
+        console.log(error)
+
+        if (res.statusCode === 200) {
+            res.status(500)
+        }
+
         res.send(error.message)
     }
 })
@@ -232,7 +263,7 @@ app.put("/product/:id", (req: Request, res: Response) => {
             throw new Error("'newName' deve ter pelo menos 1 caractere!")
         }
 
-        if (typeof newPrice !== "number") {
+        if (newPrice && typeof newPrice !== "number") {
             res.status(400)
             throw new Error("'newPrice' deve ser um número!")
         }
@@ -246,36 +277,20 @@ app.put("/product/:id", (req: Request, res: Response) => {
         }
         res.status(200).send("Produto atualizado com sucesso!")
     } catch (error: any) {
-        console.log(error);
+        console.log(error)
 
         if (res.statusCode === 200) {
-            res.status(500);
+            res.status(500)
         }
 
-        res.send(error.message);
+        res.send(error.message)
     }
 });
 
 //todas as compras
 app.get("/purchases", (req: Request, res: Response) => {
-    res.status(200).send(purchases)
-})
-
-//procurar produto
-app.get("/products/search", (req: Request, res: Response) => {
-    let productFilter
     try {
-        const q = req.query.q as string
-
-        if (q.length <= 1) {
-            res.status(400)
-            throw new Error("Query params deve possuir pelo menos um caractere!")
-        }
-
-        productFilter = products.filter((product) => {
-            return product.name.toLowerCase().includes(q.toLowerCase())
-        });
-        res.status(200).send(productFilter)
+        res.status(200).send(purchases)
     } catch (error: any) {
         console.log(error)
 
@@ -283,7 +298,7 @@ app.get("/products/search", (req: Request, res: Response) => {
             res.status(500)
         }
 
-        res.send(error.message);
+        res.send(error.message)
     }
 })
 
@@ -304,8 +319,8 @@ app.post("/users", (req: Request, res: Response) => {
         const findEmail = users.find((user) => user.email === newEmail);
 
         if (findEmail) {
-            res.status(400);
-            throw new Error("E-mail indisponivel!");
+            res.status(400)
+            throw new Error("E-mail indisponivel!")
         }
 
         const newUser: TPerson = {
@@ -365,8 +380,9 @@ app.post("/products", (req: Request, res: Response) => {
 //criar nova compra
 app.post("/purchases", (req: Request, res: Response) => {
     try {
+        
         const newUserId = req.body.userId
-        const newProductId = req.body.productID
+        const newProductId = req.body.productId
         const newQuantity = req.body.quantity
         const newTotalPrice = req.body.totalPrice
 
