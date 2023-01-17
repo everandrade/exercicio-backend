@@ -1,4 +1,4 @@
--- Active: 1673888548755@@127.0.0.1@3306
+-- Active: 1673975451583@@127.0.0.1@3306
 
 --Tabela de usuários
 
@@ -27,13 +27,14 @@ VALUES (
 
 UPDATE users
 SET
-	email = "fulana@outro-email.com",
-	password = "fulana00"
+    email = "fulana@outro-email.com",
+    password = "fulana00"
 WHERE id = "id02";
 
 DELETE FROM users WHERE id = "id02";
 
 SELECT * FROM users;
+
 --Tabela de produtos
 
 CREATE TABLE
@@ -76,3 +77,46 @@ VALUES (
 DELETE FROM products WHERE id = "idProduct02";
 
 SELECT * FROM products;
+
+-- daqui
+SELECT * FROM users;
+
+SELECT * FROM products;
+
+SELECT * FROM products WHERE name LIKE "%01";
+
+INSERT INTO
+    users (id, email, password)
+VALUES (
+        "id50",
+        "id50@gmail.com",
+        "password50"
+    );
+
+INSERT INTO
+    products (id, name, price, category)
+VALUES (
+        "idProduct50",
+        "camiseta 50",
+        23,
+        "Camiseta"
+    );
+
+SELECT * FROM products WHERE id LIKE "%50";
+
+DELETE FROM products WHERE id LIKE "%50";
+
+DELETE FROM users WHERE id LIKE "%50";
+
+UPDATE users SET password = "bananinha123" WHERE id = "id50";
+
+UPDATE products SET price = 1000 WHERE id = "idProduct50";
+
+SELECT * FROM users ORDER BY email ASC;
+
+SELECT * FROM products ORDER BY price ASC LIMIT 3 OFFSET 2;
+
+SELECT * FROM products;
+
+SELECT * FROM products WHERE "price" > 22 AND "price" < 41
+ORDER BY price ASC;
