@@ -1,4 +1,4 @@
--- Active: 1673975451583@@127.0.0.1@3306
+-- Active: 1674061515620@@127.0.0.1@3306
 
 --Tabela de usuários
 
@@ -79,6 +79,7 @@ DELETE FROM products WHERE id = "idProduct02";
 SELECT * FROM products;
 
 -- daqui
+
 SELECT * FROM users;
 
 SELECT * FROM products;
@@ -118,5 +119,72 @@ SELECT * FROM products ORDER BY price ASC LIMIT 3 OFFSET 2;
 
 SELECT * FROM products;
 
-SELECT * FROM products WHERE "price" > 22 AND "price" < 41
+SELECT *
+FROM products
+WHERE "price" > 22 AND "price" < 41
 ORDER BY price ASC;
+
+-- Relações SQL
+
+CREATE TABLE
+    purchases (
+        id TEXT PRIMARY KEY UNIQUE NOT NULL,
+        total_price REAL NOT NULL,
+        paid INTEGER NOT NULL,
+        delivered_at TEXT,
+        buyer_id TEXT NOT NULL,
+        Foreign Key (buyer_id) REFERENCES users(id)
+    );
+
+INSERT INTO
+    purchases (
+        id,
+        total_price,
+        paid,
+        delivered_at,
+        buyer_id
+    )
+VALUES (
+        "idP01",
+        23,
+        0,
+        DATETIME(),
+        "id01"
+    ), (
+        "idP02",
+        50,
+        0,
+        "",
+        "id01"
+    ), (
+        "idP03",
+        15,
+        0,
+        "",
+        "id02"
+    ), (
+        "idP04",
+        18,
+        0,
+        DATETIME(),
+        "id02"
+    ), (
+        "idP05",
+        40,
+        0,
+        DATETIME(),
+        "id03"
+    ), (
+        "idP06",
+        101,
+        0,
+        DATETIME(),
+        "id03"
+    );
+
+SELECT * FROM purchases;
+
+DROP TABLE purchases;
+
+SELECT * FROM purchases INNER JOIN users ON users.id = buyer_id
+WHERE users.id="id01";
