@@ -1,4 +1,4 @@
--- Active: 1674061515620@@127.0.0.1@3306
+-- Active: 1674149745753@@127.0.0.1@3306
 
 --Tabela de usuários
 
@@ -151,16 +151,16 @@ VALUES (
         DATETIME(),
         "id01"
     ), (
-        "idP02",
-        50,
-        0,
-        "",
+        "idP02", 
+        50, 
+        0, 
+        "", 
         "id01"
     ), (
-        "idP03",
-        15,
-        0,
-        "",
+        "idP03", 
+        15, 
+        0, 
+        "", 
         "id02"
     ), (
         "idP04",
@@ -186,5 +186,46 @@ SELECT * FROM purchases;
 
 DROP TABLE purchases;
 
-SELECT * FROM purchases INNER JOIN users ON users.id = buyer_id
-WHERE users.id="id01";
+SELECT *
+FROM purchases
+    INNER JOIN users ON users.id = buyer_id
+WHERE users.id = "id01";
+
+-- Relações SQL II
+
+CREATE TABLE
+    purchases_products (
+        purchase_id TEXT PRIMARY KEY NOT NULL,
+        product_id TEXT NOT NULL,
+        quantity INTEGER NOT NULL,
+        Foreign Key (purchase_id) REFERENCES purchases(id)
+        Foreign Key (product_id) REFERENCES products(id)
+    );
+
+INSERT INTO
+    purchases_products (
+        purchase_id,
+        product_id,
+        quantity
+    )
+VALUES 
+("idP01", "idProduct03", 5), 
+("idP02", "idProduct01", 2), 
+("idP03", "idProduct04", 3), 
+("idP04", "idProduct05", 1), 
+("idP05", "idProduct01", 7);
+
+DROP TABLE purchases_products;
+
+SELECT
+purchases.id AS purchaseId,
+purchases.total_price AS totalPrice,
+purchases.paid,
+purchases.delivered_at AS deliveredDate,
+purchases.buyer_id AS buyerId,
+products.id AS productId,
+products.name AS productName,
+products.price
+FROM purchases
+    LEFT JOIN purchases_products ON purchases_products.purchase_id = purchases.id
+    INNER JOIN products ON purchases_products.product_id = products.id;
