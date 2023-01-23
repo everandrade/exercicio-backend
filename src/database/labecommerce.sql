@@ -1,28 +1,42 @@
--- Active: 1674149745753@@127.0.0.1@3306
+-- Active: 1674493920243@@127.0.0.1@3306
 
 --Tabela de usuários
 
 CREATE TABLE
     users (
         id TEXT PRIMARY KEY UNIQUE NOT NULL,
+        name TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+        createdAt TEXT
     );
 
 INSERT INTO
-    users (id, email, password)
+    users (
+        id,
+        name,
+        email,
+        password,
+        "createdAt"
+    )
 VALUES (
         "id01",
+        "nome1",
         "id01@gmail.com",
-        "password01"
+        "password01",
+        DATE("now")
     ), (
         "id02",
+        "nome1",
         "id02@gmail.com",
-        "password02"
+        "password02",
+        DATE("now")
     ), (
         "id03",
+        "nome1",
         "id03@gmail.com",
-        "password03"
+        "password03",
+        DATE("now")
     );
 
 UPDATE users
@@ -42,36 +56,48 @@ CREATE TABLE
         id TEXT PRIMARY KEY UNIQUE NOT NULL,
         name TEXT NOT NULL,
         price REAL NOT NULL,
-        category TEXT NOT NULL
+        category TEXT NOT NULL,
+        imageUrl TEXT NOT NULL
     );
 
 INSERT INTO
-    products (id, name, price, category)
+    products (
+        id,
+        name,
+        price,
+        category,
+        imageUrl
+    )
 VALUES (
         "idProduct01",
         "camiseta 01",
         23,
-        "Camiseta"
+        "Camiseta",
+        "www.imagem1.com.br"
     ), (
         "idProduct02",
         "camiseta 02",
         30,
-        "Regata"
+        "Regata",
+        "www.imagem2.com.br"
     ), (
         "idProduct03",
         "camiseta 03",
         35,
-        "Camisa"
+        "Camisa",
+        "www.imagem3.com.br"
     ), (
         "idProduct04",
         "camiseta 04",
         40,
-        "Regata"
+        "Regata",
+        "www.imagem4.com.br"
     ), (
         "idProduct05",
         "camiseta 05",
         20,
-        "Camiseta"
+        "Camiseta",
+        "www.imagem1=5.com.br"
     );
 
 DELETE FROM products WHERE id = "idProduct02";
@@ -87,20 +113,29 @@ SELECT * FROM products;
 SELECT * FROM products WHERE name LIKE "%01";
 
 INSERT INTO
-    users (id, email, password)
+    users (
+        id,
+        name,
+        email,
+        password,
+        createdAt
+    )
 VALUES (
         "id50",
+        "nome50",
         "id50@gmail.com",
-        "password50"
+        "password50",
+        DATE("now")
     );
 
 INSERT INTO
-    products (id, name, price, category)
+    products (id, name, price, category, "imageUrl")
 VALUES (
         "idProduct50",
         "camiseta 50",
         23,
-        "Camiseta"
+        "Camiseta",
+        "www.produto50.com.br"
     );
 
 SELECT * FROM products WHERE id LIKE "%50";
@@ -150,19 +185,7 @@ VALUES (
         0,
         DATETIME(),
         "id01"
-    ), (
-        "idP02", 
-        50, 
-        0, 
-        "", 
-        "id01"
-    ), (
-        "idP03", 
-        15, 
-        0, 
-        "", 
-        "id02"
-    ), (
+    ), ("idP02", 50, 0, "", "id01"), ("idP03", 15, 0, "", "id02"), (
         "idP04",
         18,
         0,
@@ -198,8 +221,7 @@ CREATE TABLE
         purchase_id TEXT PRIMARY KEY NOT NULL,
         product_id TEXT NOT NULL,
         quantity INTEGER NOT NULL,
-        Foreign Key (purchase_id) REFERENCES purchases(id)
-        Foreign Key (product_id) REFERENCES products(id)
+        Foreign Key (purchase_id) REFERENCES purchases(id) Foreign Key (product_id) REFERENCES products(id)
     );
 
 INSERT INTO
@@ -208,24 +230,21 @@ INSERT INTO
         product_id,
         quantity
     )
-VALUES 
-("idP01", "idProduct03", 5), 
-("idP02", "idProduct01", 2), 
-("idP03", "idProduct04", 3), 
-("idP04", "idProduct05", 1), 
-("idP05", "idProduct01", 7);
+VALUES ("idP01", "idProduct03", 5), ("idP02", "idProduct01", 2), ("idP03", "idProduct04", 3), ("idP04", "idProduct05", 1), ("idP05", "idProduct01", 7);
 
 DROP TABLE purchases_products;
 
 SELECT
-purchases.id AS purchaseId,
-purchases.total_price AS totalPrice,
-purchases.paid,
-purchases.delivered_at AS deliveredDate,
-purchases.buyer_id AS buyerId,
-products.id AS productId,
-products.name AS productName,
-products.price
+    purchases.id AS purchaseId,
+    purchases.total_price AS totalPrice,
+    purchases.paid,
+    purchases.delivered_at AS deliveredDate,
+    purchases.buyer_id AS buyerId,
+    products.id AS productId,
+    products.name AS productName,
+    products.price
 FROM purchases
     LEFT JOIN purchases_products ON purchases_products.purchase_id = purchases.id
     INNER JOIN products ON purchases_products.product_id = products.id;
+
+SELECT * FROM users;
