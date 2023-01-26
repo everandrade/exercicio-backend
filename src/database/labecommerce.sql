@@ -1,4 +1,4 @@
--- Active: 1674493920243@@127.0.0.1@3306
+-- Active: 1674739125209@@127.0.0.1@3306
 
 --Tabela de usuários
 
@@ -166,7 +166,7 @@ CREATE TABLE
         id TEXT PRIMARY KEY UNIQUE NOT NULL,
         total_price REAL NOT NULL,
         paid INTEGER NOT NULL,
-        delivered_at TEXT,
+        created_at TEXT,
         buyer_id TEXT NOT NULL,
         Foreign Key (buyer_id) REFERENCES users(id)
     );
@@ -176,7 +176,7 @@ INSERT INTO
         id,
         total_price,
         paid,
-        delivered_at,
+        created_at,
         buyer_id
     )
 VALUES (
@@ -218,7 +218,7 @@ WHERE users.id = "id01";
 
 CREATE TABLE
     purchases_products (
-        purchase_id TEXT PRIMARY KEY NOT NULL,
+        purchase_id TEXT NOT NULL,
         product_id TEXT NOT NULL,
         quantity INTEGER NOT NULL,
         Foreign Key (purchase_id) REFERENCES purchases(id) Foreign Key (product_id) REFERENCES products(id)
@@ -238,7 +238,7 @@ SELECT
     purchases.id AS purchaseId,
     purchases.total_price AS totalPrice,
     purchases.paid,
-    purchases.delivered_at AS deliveredDate,
+    purchases.created_at AS deliveredDate,
     purchases.buyer_id AS buyerId,
     products.id AS productId,
     products.name AS productName,
@@ -248,3 +248,14 @@ FROM purchases
     INNER JOIN products ON purchases_products.product_id = products.id;
 
 SELECT * FROM users;
+SELECT * FROM products;
+SELECT * FROM purchases;
+SELECT * FROM purchases_products;
+
+INSERT INTO
+    purchases_products (
+        purchase_id,
+        product_id,
+        quantity
+    )
+VALUES ("idP01", "idProduct02", 2);
