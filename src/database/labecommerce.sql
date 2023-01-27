@@ -1,4 +1,4 @@
--- Active: 1674739125209@@127.0.0.1@3306
+-- Active: 1674840844713@@127.0.0.1@3306
 
 --Tabela de usuários
 
@@ -56,7 +56,7 @@ CREATE TABLE
         id TEXT PRIMARY KEY UNIQUE NOT NULL,
         name TEXT NOT NULL,
         price REAL NOT NULL,
-        category TEXT NOT NULL,
+        description TEXT NOT NULL,
         imageUrl TEXT NOT NULL
     );
 
@@ -65,38 +65,38 @@ INSERT INTO
         id,
         name,
         price,
-        category,
+        description,
         imageUrl
     )
 VALUES (
         "idProduct01",
         "camiseta 01",
         23,
-        "Camiseta",
+        "Camiseta Easy Em Algodão Com Estampa Listrada Preto",
         "www.imagem1.com.br"
     ), (
         "idProduct02",
         "camiseta 02",
         30,
-        "Regata",
+        "Regata Easy Em Algodão Com Estampa Listrada Preto",
         "www.imagem2.com.br"
     ), (
         "idProduct03",
         "camiseta 03",
         35,
-        "Camisa",
+        "Camiseta Easy Em Algodão Com Estampa Listrada Preto",
         "www.imagem3.com.br"
     ), (
         "idProduct04",
         "camiseta 04",
         40,
-        "Regata",
+        "Regata Easy Em Algodão Com Estampa Listrada Preto",
         "www.imagem4.com.br"
     ), (
         "idProduct05",
         "camiseta 05",
         20,
-        "Camiseta",
+        "Camiseta Easy Em Algodão Com Estampa Listrada Preto",
         "www.imagem1=5.com.br"
     );
 
@@ -129,12 +129,12 @@ VALUES (
     );
 
 INSERT INTO
-    products (id, name, price, category, "imageUrl")
+    products (id, name, price, description, "imageUrl")
 VALUES (
         "idProduct50",
         "camiseta 50",
         23,
-        "Camiseta",
+        "Camiseta Easy Em Algodão Com Estampa Listrada Preto",
         "www.produto50.com.br"
     );
 
@@ -146,7 +146,7 @@ DELETE FROM users WHERE id LIKE "%50";
 
 UPDATE users SET password = "bananinha123" WHERE id = "id50";
 
-UPDATE products SET price = 1000 WHERE id = "idProduct50";
+UPDATE purchases SET created_at = "2023-01-26 14:48:58" WHERE id = "idP03";
 
 SELECT * FROM users ORDER BY email ASC;
 
@@ -207,7 +207,7 @@ VALUES (
 
 SELECT * FROM purchases;
 
-DROP TABLE purchases;
+DROP TABLE products;
 
 SELECT *
 FROM purchases
