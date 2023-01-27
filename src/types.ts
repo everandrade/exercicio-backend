@@ -1,7 +1,9 @@
 export type TPerson = {
     id: string;
+    name: string;
     email: string;
-    password: string;
+    password: number;
+    createdAt: string;
 }
 
 export enum Category {
@@ -14,12 +16,20 @@ export type TProduct = {
     id: string;
     name: string;
     price: number;
-    category: Category;
+    description: string;
+    imageUrl: string;
 }
 
 export type TPurchase = {
-    userId: string;
-    productId: string;
+    id: string;
+    total_price: number;
+    paid: number;
+    created_at: string;
+    buyer_id: string;
+}
+
+export type TPurchasesProducts = {
+    purchase_id: string;
+    product_id: string;
     quantity: number;
-    totalPrice: number;
 }
